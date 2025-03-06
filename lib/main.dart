@@ -1,4 +1,5 @@
 import 'package:chesstimer/screens/HomeScreen.dart';
+import 'package:chesstimer/screens/TimerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
