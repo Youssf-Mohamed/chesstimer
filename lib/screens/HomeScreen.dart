@@ -1,6 +1,8 @@
 import 'package:chesstimer/screens/TimerScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../component/component.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -54,26 +56,10 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(width: 100),
-              ElevatedButton(
-                style: ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
-                onPressed: () {},
-                child: Text('2', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
-                onPressed: () {},
-                child: Text('5', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
-                onPressed: () {},
-                child: Text('10', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(shape: WidgetStatePropertyAll(CircleBorder())),
-                onPressed: () {},
-                child: Text('20', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
+              CircleButtton(time: 2,fun:(){print('hello');}),
+              CircleButtton(time: 5,fun:(){print('hello');}),
+              CircleButtton(time: 10,fun:(){print('hello');}),
+              CircleButtton(time: 20,fun:(){print('hello');}),
               SizedBox(width: 100),
             ],
           ),

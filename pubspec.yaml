@@ -37,6 +37,8 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_animate: ^4.5.2
   just_audio: ^0.9.46
+  #bloc: ^9.0.0
+  flutter_bloc: ^9.1.0
 
 dev_dependencies:
   flutter_test:
