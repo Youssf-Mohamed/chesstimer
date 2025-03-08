@@ -1,128 +1,163 @@
+import 'package:chesstimer/component/component.dart';
 import 'package:chesstimer/screens/TimerScreen.dart';
+import 'package:chesstimer/screens/optionScreen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../component/component.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedm = 0 ;
+  int _selecteds = 0 ;
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.grey,
+      backgroundColor:Colors.white70,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
             children: [
-              Text('Chess Time', style: TextStyle(fontSize: 60)),
-            ],
+              Text('Chess Time', style: TextStyle(fontSize: 80 ,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3))))
+      ],
           ),
           SizedBox(height: 100),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 120,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  controller: TextEditingController(),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Minutes'),
-                ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white, // Button background color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.0),
               ),
-              SizedBox(width: 20),
-              Container(
-                width: 120,
-                height: 40,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: Colors.white,
+              fixedSize: const Size(307, 53), // Same width and height as the container
+            ),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    height: 400,
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                          child: const Text('Close'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: 61,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Center(child: Text('$index')),
+                                      onTap: () {
+                                        setState(() {
+                                          _selectedm = index;
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: 61,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Center(child: Text('$index')),
+                                      onTap: () {
+                                        setState(() {
+                                          _selecteds = index;
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(width: 24), // Spacer to balance icon on right
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '$_selectedm : $_selecteds',
+                      style: const TextStyle(
+                        fontSize: 35,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
-                child: TextField(
-                  controller: TextEditingController(),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Seconds'),
+                const Icon(
+                  Icons.punch_clock,
+                  color: Colors.black,
+                  size: 50,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: 20), // <- This line is now inside the children list
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SizedBox(width: 100),
-              CircleButtton(time: 2,fun:(){print('hello');}),
-              CircleButtton(time: 5,fun:(){print('hello');}),
-              CircleButtton(time: 10,fun:(){print('hello');}),
-              CircleButtton(time: 20,fun:(){print('hello');}),
+
+              CircleButtton(
+                time: 2,
+                fun: (selectedTime) => setState(() => _selectedm = selectedTime),
+                zer: (selectedTime) => setState(() => _selecteds = selectedTime), // Resets seconds to 0
+              ),
+              CircleButtton(
+                time: 5,
+                fun: (selectedTime) => setState(() => _selectedm = selectedTime),
+                zer: (selectedTime) => setState(() => _selecteds = selectedTime), // Resets seconds to 0
+              ),
+              CircleButtton(
+                time: 10,
+                fun: (selectedTime) => setState(() => _selectedm = selectedTime),
+                zer: (selectedTime) => setState(() => _selecteds = selectedTime), // Resets seconds to 0
+              ),
+              CircleButtton(
+                time: 20,
+                fun: (selectedTime) => setState(() => _selectedm = selectedTime),
+                zer: (selectedTime) => setState(() => _selecteds = selectedTime), // Resets seconds to 0
+              ),
+
+
+
+
+
+
               SizedBox(width: 100),
             ],
           ),
           SizedBox(height: 40),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TimerScreen()),
-              );
-            },
-            child: Container(
-              width: 100,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Text('Start', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-            ),
-          ),
+          NorButton(context: context, name: 'Start', func: TimerScreen()),
           SizedBox(height: 20),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TimerScreen()),
-              );
-            },
-            child: Container(
-              width: 100,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Text('Option', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-            ),
-          ),
+          NorButton(context: context, name: 'Option', func: OptionScreen()),
           SizedBox(height: 20),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TimerScreen()),
-              );
-            },
-            child: Container(
-              width: 100,
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.0),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Text('Credit', style: TextStyle(fontSize: 22, color: Colors.black)),
-              ),
-            ),
-          ),
+          NorButton(context: context, name: 'Credit', func: TimerScreen()),
         ],
       ),
 
