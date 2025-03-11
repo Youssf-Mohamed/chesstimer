@@ -20,11 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           textTheme: GoogleFonts.jockeyOneTextTheme(),
         ),
-        home: HomeScreen(
-
-        )
-
-        ,
+        home: HomeScreen(),
       ),
     );
   }
