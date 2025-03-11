@@ -1,6 +1,7 @@
 import 'package:chesstimer/bloc/TimerCubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../bloc/states.dart';
 
@@ -22,28 +23,75 @@ class TimerScreen extends StatelessWidget {
         children: [
 
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: () {
-                  cubit.add();
+                  if(!cubit.whiteTurn) {
+                    cubit.blackTimeRemaining(time: int.parse(cubit.remainingTime.toString()));
+                  }
                 },
-                child: Expanded(child: Column(
+                child: Column(
                   children: [
-                    RotatedBox(quarterTurns: 2,child: Text('${cubit.whitetime.toString()+':'}00',style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),),
+                    cubit.whiteTurn?
+                    RotatedBox(quarterTurns: 2,child: Text(cubit.secondToString(seconds: cubit.remainingTime),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),)):
+                    RotatedBox(quarterTurns: 2,child: TimerCountdown(
+                      format: CountDownTimerFormat.minutesSeconds,
+                      spacerWidth: 0,
+                      colonsTextStyle: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2)),),
+                      enableDescriptions: false,
+                      timeTextStyle: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2)),),
+                      endTime: DateTime.now().add(
+                        Duration(
+                          seconds: cubit.blackTime,
+                        ),
+                      ),
+                      onTick: (remainingTime) {
+                        cubit.remainingTime=remainingTime.inSeconds;
+                      },
+                      onEnd: () {
+                        print("Timer finished");
+                      },
+                    ),),
                     RotatedBox(quarterTurns: 2,child: Text('Black',style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),),
 
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
-                )),
+                ),
               ),
-              Expanded(child: Column(
-                children: [
-                  RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
-                  RotatedBox(quarterTurns: 0,child: Text('5:55',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
-
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ))
+              GestureDetector(
+                onTap: () {
+                  if(cubit.whiteTurn)
+                    {
+                      cubit.whiteTimeRemaining(time: int.parse(cubit.remainingTime.toString()));
+                    }
+                },
+                child: Column(
+                  children: [
+                    RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
+                    //RotatedBox(quarterTurns: 0,child: Text('5:55',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
+                    cubit.whiteTurn?RotatedBox(quarterTurns:0, child: TimerCountdown(
+                      format: CountDownTimerFormat.minutesSeconds,
+                      spacerWidth: 0,
+                      colonsTextStyle: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),
+                      enableDescriptions: false,
+                      timeTextStyle: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),
+                      endTime: DateTime.now().add(
+                        Duration(
+                          seconds: cubit.whiteTime,
+                        ),
+                      ),
+                      onTick: (remainingTime) {
+                        cubit.remainingTime=remainingTime.inSeconds;
+                      },
+                      onEnd: () {
+                        print("Timer finished");
+                      },
+                    ),):RotatedBox(quarterTurns: 0,child: Text(cubit.secondToString(seconds: cubit.remainingTime),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              )
             ],
           ),
           Padding(
@@ -105,7 +153,7 @@ class TimerScreen extends StatelessWidget {
                   ),
                   child: IconButton(onPressed: ()
                   {
-
+                    Navigator.pop(context);
                   },
                     icon:  Icon(Icons.exit_to_app,color: Colors.black,),
                   ),
