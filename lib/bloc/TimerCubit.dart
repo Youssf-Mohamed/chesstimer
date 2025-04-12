@@ -12,6 +12,7 @@ class TimerCubit extends Cubit<AppStates>
   int blackTime=300;
   bool whiteTurn=true;
   var remainingTime=300;
+
   void whiteTimeRemaining({required int time}){
     whiteTime=time;
     whiteTurn=false;
@@ -44,11 +45,29 @@ class TimerCubit extends Cubit<AppStates>
     }
     return time;
   }
+
+  /// Time is The Time in Second
   void initialGame({required int time}){
     whiteTime=time;
     blackTime=time;
     whiteTurn=true;
     remainingTime=time;
     emit(InitialGameState());
+  }
+
+  void timeUpdate(){
+    emit(SelectTimeState());
+  }
+
+  int screenRotate=0;
+  void rotateScreen(){
+    if(screenRotate==0)
+      {
+        screenRotate=2;
+      }
+    else{
+      screenRotate=0;
+    }
+    emit(ScreenRotateState());
   }
 }

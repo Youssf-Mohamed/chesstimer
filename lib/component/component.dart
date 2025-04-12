@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 Widget CircleButtton({
   required int time,
-  required Function(int) fun,
-  int sec = 0,
-  required Function(int) zer,
+  required func(),
+ // int sec = 0,
+ // required Function(int) zer,
 }) => GestureDetector(
   onTap: () {
-    fun(time);   // Sets the minute
-    zer(0);      // Resets the seconds to 0
+    // Resets the seconds to 0
+    func();
   },
   child: Container(
     width: 50,
@@ -40,12 +40,9 @@ Widget CircleButtton({
 
 
 
-Widget NorButton({required BuildContext context, required String name, required Widget func}) => GestureDetector(
+Widget NorButton({required BuildContext context, required String name, required func()}) => GestureDetector(
   onTap: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => func),
-    );
+    func();
   },
   child: Container(
     width: 231,
