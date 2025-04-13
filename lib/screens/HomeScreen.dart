@@ -138,8 +138,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(width: 100),
-
+                      SizedBox(width: 50),
                       CircleButtton(
                         time: 2,
                         func: () {
@@ -168,7 +167,7 @@ class HomeScreen extends StatelessWidget {
                           cubit.timeUpdate();
                         }, // Resets seconds to 0
                       ),
-                      SizedBox(width: 100),
+                      SizedBox(width: 50),
                     ],
                   ),
                   SizedBox(height: 40),
