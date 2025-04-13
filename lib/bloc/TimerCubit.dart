@@ -12,7 +12,8 @@ class TimerCubit extends Cubit<AppStates>
   int blackTime=300;
   bool whiteTurn=true;
   var remainingTime=300;
-
+  bool whiteDraw=false;
+  bool blackDraw=false;
   void whiteTimeRemaining({required int time}){
     whiteTime=time;
     whiteTurn=false;
