@@ -1,4 +1,5 @@
 import 'package:chesstimer/component/component.dart';
+import 'package:chesstimer/screens/CreditScreen.dart';
 import 'package:chesstimer/screens/TimerScreen.dart';
 import 'package:chesstimer/screens/optionScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -181,11 +182,11 @@ class HomeScreen extends StatelessWidget {
                   },),
                   SizedBox(height: 20),
                   NorButton(context: context, name: 'Option', func: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => TimerScreen(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OptionScreen(),));
                   },),
                   SizedBox(height: 20),
                   NorButton(context: context, name: 'Credit', func: () {
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => TimerScreen(),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));
                   },),
                 ],
               ),

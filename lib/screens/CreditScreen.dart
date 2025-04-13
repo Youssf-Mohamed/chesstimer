@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-class OptionScreen extends StatelessWidget {
-  const OptionScreen({Key? key}) : super(key: key);
+class CreditScreen extends StatelessWidget {
+  const CreditScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +29,13 @@ class OptionScreen extends StatelessWidget {
             ),
           ),
 
+          // Content
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Options',
+                  'Credits',
                   style: TextStyle(
                     fontSize: 50,
                     color: Colors.white,
@@ -50,37 +50,41 @@ class OptionScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 50),
 
-                // 🎵 Volume slider with music icon
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Rounded container
-                    Container(
-                      width: 200, // smaller width
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Slider(
-                        value: 0.5,
-                        onChanged: (value) {},
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.grey[400],
+                Text(
+                  'Ahmed Samy',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    shadows: List.filled(
+                      50,
+                      const Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
                       ),
                     ),
-                    const SizedBox(width: 8), // Less space between slider and icon
-                    const Icon(Icons.volume_up, color: Colors.white),
-                  ],
+                  ),
                 ),
-
                 const SizedBox(height: 20),
-
-                IconButton(
-                  icon: const Icon(Icons.brightness_2, color: Colors.white),
-                  onPressed: () {},
+                Text(
+                  'Yousef Mohamed',
+                  style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    shadows: List.filled(
+                      50,
+                      const Shadow(
+                        color: Colors.black,
+                        offset: Offset(0, 0),
+                        blurRadius: 2,
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 50),
