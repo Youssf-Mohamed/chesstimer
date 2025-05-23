@@ -24,11 +24,11 @@ class Winnerscreen extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen(),), (route) => false,);
               },
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("$winner is the winner",style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 90,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
-                  Text('press on the screen to continue',style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
+                  Text("$winner is the winner",textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 80,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
+                  Text('press on the screen to continue',textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 40,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
                 ],
               ),
             ),

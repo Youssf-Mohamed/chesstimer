@@ -4,19 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timer_count_down/timer_controller.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 import '../bloc/states.dart';
 
 class TimerScreen extends StatelessWidget {
-  const TimerScreen({super.key});
-
+  TimerScreen({super.key});
+  final CountdownController _whitecontroller = CountdownController(autoStart: true);
+  final CountdownController _blackcontroller = CountdownController(autoStart: false);
   @override
   Widget build(BuildContext context) {
+    var cubit=TimerCubit.get(context);
     return BlocConsumer<TimerCubit,AppStates>(
       listener: (context, state) {
-
+      if(cubit.blackDraw&&cubit.whiteDraw)
+        {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
+        }
      },
     builder: (context, state) {
-      var cubit=TimerCubit.get(context);
+
      return  RotatedBox(
        quarterTurns: cubit.screenRotate,
        child: Scaffold(
@@ -24,77 +31,88 @@ class TimerScreen extends StatelessWidget {
         body: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    if(!cubit.whiteTurn) {
-                      cubit.blackTimeRemaining(time: int.parse(cubit.remainingTime.toString()));
-                    }
-                  },
-                  child: Column(
-                    children: [
-                      cubit.whiteTurn?
-                      RotatedBox(quarterTurns: 2,child: Text(cubit.secondToString(seconds: cubit.remainingTime),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),)):
-                      RotatedBox(quarterTurns: 2,child: TimerCountdown(
-                        format: CountDownTimerFormat.minutesSeconds,
-                        spacerWidth: 0,
-                        colonsTextStyle: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2)),),
-                        enableDescriptions: false,
-                        timeTextStyle: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2)),),
-                        endTime: DateTime.now().add(
-                          Duration(
-                            seconds: cubit.blackTime,
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    color: cubit.whiteTurn?Colors.transparent:Colors.green,
+                    child: GestureDetector(
+                      onTap: () {
+                        if(!cubit.whiteTurn) {
+                          _whitecontroller.start();
+                          _blackcontroller.pause();
+                          cubit.whiteTurnState();
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          RotatedBox(quarterTurns: 2,child:
+                              Countdown(
+                                seconds: cubit.blackTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
+                                interval: Duration(milliseconds: 100),
+                                controller: _blackcontroller,
+                                onFinished: (){
+                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('White'),), (route) => false,);
+                                },
+                              ),
                           ),
-                        ),
-                        onTick: (remainingTime) {
-                          cubit.remainingTime=remainingTime.inSeconds;
-                        },
-                        onEnd: () {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('White'),), (route) => false,);
-                        },
-                      ),),
-                      RotatedBox(quarterTurns: 2,child: Text('Black',style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),),
-
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
+                          RotatedBox(
+                            quarterTurns: 2,
+                            child: Text(
+                              'Black',
+                              style: GoogleFonts.bebasNeue(
+                                  color: Colors.black,
+                                  fontSize: 60,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: List.filled(
+                                      100,
+                                      Shadow(
+                                          color: Colors.white,
+                                          offset: Offset(0, 0),
+                                          blurRadius: 2
+                                      )
+                                  )
+                              ),
+                            ),
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if(cubit.whiteTurn)
-                      {
-                        cubit.whiteTimeRemaining(time: int.parse(cubit.remainingTime.toString()));
-                      }
-                  },
-                  child: Column(
-                    children: [
-                      RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
-                      //RotatedBox(quarterTurns: 0,child: Text('5:55',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
-                      cubit.whiteTurn?RotatedBox(quarterTurns:0, child: TimerCountdown(
-                        format: CountDownTimerFormat.minutesSeconds,
-                        spacerWidth: 0,
-                        colonsTextStyle: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),
-                        enableDescriptions: false,
-                        timeTextStyle: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),
-                        endTime: DateTime.now().add(
-                          Duration(
-                            seconds: cubit.whiteTime,
-                          ),
-                        ),
-                        onTick: (remainingTime) {
-                          cubit.remainingTime=remainingTime.inSeconds;
-                        },
-                        onEnd: () {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('Black'),), (route) => false,);
-                        },
-                      ),):RotatedBox(quarterTurns: 0,child: Text(cubit.secondToString(seconds: cubit.remainingTime),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    color: cubit.whiteTurn?Colors.green:Colors.transparent,
+                    child: GestureDetector(
+                      onTap: () {
+                        if(cubit.whiteTurn)
+                          {
+                            _blackcontroller.start();
+                            _whitecontroller.pause();
+                            cubit.blackTurnState();
+                          }
+                      },
+                      child: Column(
+                        children: [
+                          RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
+                          RotatedBox(quarterTurns:0, child: Countdown(
+                            seconds: cubit.whiteTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),),
+                            interval: Duration(milliseconds: 100),
+                            controller: _whitecontroller,
+                            onFinished: (){
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('Black'),), (route) => false,);
+                            },
+                          ),)
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ),
                   ),
-                )
+                ),
               ],
             ),
             Padding(
@@ -136,9 +154,9 @@ class TimerScreen extends StatelessWidget {
                       ),
                       child: IconButton(onPressed: ()
                       {
-
+                        cubit.blackWantDraw();
                       },
-                        icon:  Icon(Icons.handshake,color: Colors.white,),
+                        icon:  Icon(Icons.handshake,color: cubit.blackDraw?Colors.greenAccent:Colors.white,),
                       ),
                     ),
                   ),
@@ -176,9 +194,9 @@ class TimerScreen extends StatelessWidget {
                     ),
                     child: IconButton(onPressed: ()
                     {
-
+                      cubit.whiteWantDraw();
                     },
-                      icon:  Icon(Icons.handshake,color: Colors.black,),
+                      icon:  Icon(Icons.handshake,color: cubit.whiteDraw?Colors.greenAccent:Colors.black,),
                     ),
                   ),
                   Container(

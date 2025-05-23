@@ -5,18 +5,18 @@ import 'package:chesstimer/screens/optionScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
 
 import '../bloc/TimerCubit.dart';
 import '../bloc/states.dart';
 
 
 class HomeScreen extends StatelessWidget {
-  int _selectedm = 0 ;
 
+  int _selectedm = 0 ;
   int _selecteds = 0 ;
 
   @override
-
   Widget build(BuildContext context) {
     return BlocConsumer<TimerCubit,AppStates>(
       listener: (context, state) {
@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
+                itemCount: 500,
                 itemBuilder: (context, index) {
                   int row = index ~/ 6;
                   int col = index % 6;
@@ -181,9 +182,10 @@ class HomeScreen extends StatelessWidget {
                       }
                   },),
                   SizedBox(height: 20),
-                  NorButton(context: context, name: 'Option', func: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OptionScreen(),));
-                  },),
+                  //TODO: add options later
+                  // NorButton(context: context, name: 'Option', func: () {
+                  //   Navigator.push(context, MaterialPageRoute(builder: (context) => OptionScreen(),));
+                  // },),
                   SizedBox(height: 20),
                   NorButton(context: context, name: 'Credit', func: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));

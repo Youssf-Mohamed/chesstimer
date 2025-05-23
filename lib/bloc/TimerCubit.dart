@@ -14,16 +14,6 @@ class TimerCubit extends Cubit<AppStates>
   var remainingTime=300;
   bool whiteDraw=false;
   bool blackDraw=false;
-  void whiteTimeRemaining({required int time}){
-    whiteTime=time;
-    whiteTurn=false;
-    emit(BlackTurnState());
-  }
-  void blackTimeRemaining({required int time}){
-    blackTime=time;
-    whiteTurn=true;
-    emit(WhiteTurnState());
-  }
   String secondToString({required int seconds}){
     String time='';
     int minutes=0;
@@ -53,6 +43,8 @@ class TimerCubit extends Cubit<AppStates>
     blackTime=time;
     whiteTurn=true;
     remainingTime=time;
+    whiteDraw=false;
+    blackDraw=false;
     emit(InitialGameState());
   }
 
@@ -70,5 +62,21 @@ class TimerCubit extends Cubit<AppStates>
       screenRotate=0;
     }
     emit(ScreenRotateState());
+  }
+  void whiteTurnState(){
+    whiteTurn=true;
+    emit(WhiteTurnState());
+  }
+  void blackTurnState(){
+    whiteTurn=false;
+    emit(BlackTurnState());
+  }
+  void whiteWantDraw(){
+    whiteDraw=!whiteDraw;
+    emit(WhiteDrawState());
+  }
+  void blackWantDraw(){
+    blackDraw=!blackDraw;
+    emit(BlackDrawState());
   }
 }
