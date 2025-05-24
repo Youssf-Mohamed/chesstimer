@@ -1,12 +1,9 @@
 import 'package:chesstimer/component/component.dart';
 import 'package:chesstimer/screens/CreditScreen.dart';
 import 'package:chesstimer/screens/TimerScreen.dart';
-import 'package:chesstimer/screens/optionScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scroll_loop_auto_scroll/scroll_loop_auto_scroll.dart';
-
 import '../bloc/TimerCubit.dart';
 import '../bloc/states.dart';
 
@@ -28,8 +25,9 @@ class HomeScreen extends StatelessWidget {
           body: Stack(
             children: [
               GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
-                itemCount: 500,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6,),
+                itemCount: 1000,
                 itemBuilder: (context, index) {
                   int row = index ~/ 6;
                   int col = index % 6;
@@ -45,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text('Chess Time', style: TextStyle(fontSize: 80 ,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3))))
+                      Text('Chess Time',textAlign: TextAlign.center, style: TextStyle(fontSize: 80 ,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3))))
                     ],
                   ),
                   SizedBox(height: 100),
@@ -77,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: ListView.builder(
-                                          itemCount: 61,
+                                          itemCount: 60,
                                           itemBuilder: (context, index) {
                                             return ListTile(
                                               title: Center(child: Text('$index')),
@@ -145,6 +143,7 @@ class HomeScreen extends StatelessWidget {
                         time: 2,
                         func: () {
                           _selectedm = 2;
+                          _selecteds = 0;
                           cubit.timeUpdate();
                         }, // Resets seconds to 0
                       ),
@@ -152,6 +151,7 @@ class HomeScreen extends StatelessWidget {
                         time: 5,
                         func: () {
                           _selectedm = 5;
+                          _selecteds = 0;
                           cubit.timeUpdate();
                         }, // Resets seconds to 0
                       ),
@@ -159,6 +159,7 @@ class HomeScreen extends StatelessWidget {
                         time: 10,
                         func: () {
                           _selectedm = 10;
+                          _selecteds = 0;
                           cubit.timeUpdate();
                         }, // Resets seconds to 0
                       ),
@@ -166,6 +167,7 @@ class HomeScreen extends StatelessWidget {
                         time: 20,
                         func: () {
                           _selectedm = 20;
+                          _selecteds = 0;
                           cubit.timeUpdate();
                         }, // Resets seconds to 0
                       ),
@@ -173,11 +175,11 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 40),
-                  NorButton(context: context, name: 'Start', func: () {
+                  NorButton(context: context, name: 'Start', func: () async{
                     int time=(_selectedm*60)+_selecteds;
                     if(time>0)
                       {
-                        cubit.initialGame(time: time);
+                        await cubit.initialGame(time: time);
                         Navigator.push(context, MaterialPageRoute(builder: (context) => TimerScreen(),));
                       }
                   },),

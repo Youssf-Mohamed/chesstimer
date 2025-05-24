@@ -2,7 +2,6 @@ import 'package:chesstimer/bloc/TimerCubit.dart';
 import 'package:chesstimer/screens/WinnerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
@@ -14,18 +13,14 @@ class TimerScreen extends StatelessWidget {
   final CountdownController _blackcontroller = CountdownController(autoStart: false);
   @override
   Widget build(BuildContext context) {
-    var cubit=TimerCubit.get(context);
+
     return BlocConsumer<TimerCubit,AppStates>(
       listener: (context, state) {
-      if(cubit.blackDraw&&cubit.whiteDraw)
-        {
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
-        }
      },
     builder: (context, state) {
-
+     var cubit=TimerCubit.get(context);
      return  RotatedBox(
-       quarterTurns: cubit.screenRotate,
+       quarterTurns: 0,//cubit.screenRotate,
        child: Scaffold(
         backgroundColor: Color.fromRGBO(200, 200, 200, 1),
         body: Stack(
@@ -35,23 +30,23 @@ class TimerScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    color: cubit.whiteTurn?Colors.transparent:Colors.green,
-                    child: GestureDetector(
-                      onTap: () {
-                        if(!cubit.whiteTurn) {
-                          _whitecontroller.start();
-                          _blackcontroller.pause();
-                          cubit.whiteTurnState();
-                        }
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      if(!cubit.whiteTurn) {
+                        _whitecontroller.start();
+                        _blackcontroller.pause();
+                        cubit.whiteTurnState();
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      color: cubit.whiteTurn?Colors.transparent:Colors.green,
                       child: Column(
                         children: [
                           RotatedBox(quarterTurns: 2,child:
                               Countdown(
-                                seconds: cubit.blackTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
-                                interval: Duration(milliseconds: 100),
+                                seconds: cubit.blackTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.white,offset: Offset(-2, -2),blurRadius: 2))),),
+                                interval: Duration(milliseconds: 1000),
                                 controller: _blackcontroller,
                                 onFinished: (){
                                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('White'),), (route) => false,);
@@ -67,10 +62,10 @@ class TimerScreen extends StatelessWidget {
                                   fontSize: 60,
                                   fontWeight: FontWeight.bold,
                                   shadows: List.filled(
-                                      100,
+                                      3,
                                       Shadow(
                                           color: Colors.white,
-                                          offset: Offset(0, 0),
+                                          offset: Offset(-2,-2),
                                           blurRadius: 2
                                       )
                                   )
@@ -84,24 +79,24 @@ class TimerScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    color: cubit.whiteTurn?Colors.green:Colors.transparent,
-                    child: GestureDetector(
-                      onTap: () {
-                        if(cubit.whiteTurn)
-                          {
-                            _blackcontroller.start();
-                            _whitecontroller.pause();
-                            cubit.blackTurnState();
-                          }
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      if(cubit.whiteTurn)
+                      {
+                        _blackcontroller.start();
+                        _whitecontroller.pause();
+                        cubit.blackTurnState();
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      color: cubit.whiteTurn?Colors.green:Colors.transparent,
                       child: Column(
                         children: [
-                          RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),)),
+                          RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),)),
                           RotatedBox(quarterTurns:0, child: Countdown(
-                            seconds: cubit.whiteTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2))),),
-                            interval: Duration(milliseconds: 100),
+                            seconds: cubit.whiteTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),),
+                            interval: Duration(milliseconds: 1000),
                             controller: _whitecontroller,
                             onFinished: (){
                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('Black'),), (route) => false,);
@@ -155,6 +150,10 @@ class TimerScreen extends StatelessWidget {
                       child: IconButton(onPressed: ()
                       {
                         cubit.blackWantDraw();
+                      if(cubit.blackDraw&&cubit.whiteDraw)
+                      {
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
+                      }
                       },
                         icon:  Icon(Icons.handshake,color: cubit.blackDraw?Colors.greenAccent:Colors.white,),
                       ),
@@ -195,6 +194,11 @@ class TimerScreen extends StatelessWidget {
                     child: IconButton(onPressed: ()
                     {
                       cubit.whiteWantDraw();
+                      if(cubit.blackDraw&&cubit.whiteDraw)
+                      {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
+                      }
+
                     },
                       icon:  Icon(Icons.handshake,color: cubit.whiteDraw?Colors.greenAccent:Colors.black,),
                     ),

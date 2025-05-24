@@ -12,10 +12,11 @@ class CreditScreen extends StatelessWidget {
         children: [
           SizedBox.expand(
             child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 1000,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 6,
               ),
-              itemCount: 60,
               itemBuilder: (context, index) {
                 int row = index ~/ 6;
                 int col = index % 6;
