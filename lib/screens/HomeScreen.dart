@@ -1,8 +1,11 @@
 import 'package:chesstimer/component/component.dart';
 import 'package:chesstimer/screens/CreditScreen.dart';
 import 'package:chesstimer/screens/TimerScreen.dart';
+import 'package:feedback/feedback.dart';
+import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import '../bloc/TimerCubit.dart';
 import '../bloc/states.dart';
 
@@ -189,17 +192,32 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       NorButton(context: context, name: 'Start', func: () async{
-                        int time = (_selectedm * 60) + _selecteds;
-                        if(time > 0)
-                        {
-                          await cubit.initialGame(time: time);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => TimerScreen(),));
+                        try {
+                          int time = (_selectedm * 60) + _selecteds;
+                          if (time > 0) {
+                            await cubit.initialGame(time: time);
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => TimerScreen(),));
+                          }
+                        }
+                        catch (exception,stackTrace){
+                          await Sentry.captureException(exception,stackTrace: stackTrace);
                         }
                       },),
                       const SizedBox(height: 20),
                       NorButton(context: context, name: 'Credit', func: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));
                       },),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(onPressed: (){
+                            BetterFeedback.of(context).showAndUploadToSentry(
+                            );
+                          }, icon: Icon(size: 15,Icons.feedback,color: Colors.red,))
+                        ],
+                      ),
                     ],
                   ),
                 ),
