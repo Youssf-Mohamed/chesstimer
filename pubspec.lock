@@ -25,14 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  audio_session:
-    dependency: transitive
-    description:
-      name: audio_session
-      sha256: "2b7fff16a552486d078bfc09a8cde19f426dc6d6329262b684182597bec5b1ac"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.25"
   bloc:
     dependency: transitive
     description:
@@ -121,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  file:
+    dependency: transitive
+    description:
+      name: file
+      sha256: a3b4f84adafef897088c160faf7dfffb7696046cb13ae90b508c2cbc95d3b8d4
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.1"
   fixnum:
     dependency: transitive
     description:
@@ -134,22 +134,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_animate:
-    dependency: "direct main"
-    description:
-      name: flutter_animate
-      sha256: "7befe2d3252728afb77aecaaea1dec88a89d35b9b1d2eea6d04479e8af9117b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.2"
   flutter_bloc:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: "1046d719fbdf230330d3443187cc33cc11963d15c9089f6cc56faa42a4c5f0cc"
+      sha256: cf51747952201a455a1c840f8171d273be009b932c75093020f9af64f2123e38
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.0"
+    version: "9.1.1"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -166,27 +158,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  flutter_shaders:
-    dependency: transitive
-    description:
-      name: flutter_shaders
-      sha256: "34794acadd8275d971e02df03afee3dee0f98dbfb8c4837082ad0034f612a3e2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_timer_countdown:
-    dependency: "direct main"
-    description:
-      name: flutter_timer_countdown
-      sha256: "0c73e1593ad7949c007752199a17e7ed50bb581568743dbc32f061f49873219e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.7"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -204,10 +180,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: fe7ab022b76f3034adc518fb6ea04a82387620e19977665ea18d30a1cf43442f
+      sha256: "2c11f3f94c687ee9bad77c171151672986360b2b001d109814ee7140b2cf261b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   http_parser:
     dependency: transitive
     description:
@@ -232,30 +208,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.9.0"
-  just_audio:
-    dependency: "direct main"
-    description:
-      name: just_audio
-      sha256: f978d5b4ccea08f267dae0232ec5405c1b05d3f3cd63f82097ea46c015d5c09e
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.46"
-  just_audio_platform_interface:
-    dependency: transitive
-    description:
-      name: just_audio_platform_interface
-      sha256: "271b93b484c6f494ecd72a107fffbdb26b425f170c665b9777a0a24a726f2f24"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.4.0"
-  just_audio_web:
-    dependency: transitive
-    description:
-      name: just_audio_web
-      sha256: "58915be64509a7683c44bf11cd1a23c15a48de104927bee116e3c63c8eeea0d4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.14"
   leak_tracker:
     dependency: transitive
     description:
@@ -320,6 +272,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  package_info_plus:
+    dependency: transitive
+    description:
+      name: package_info_plus
+      sha256: "7976bfe4c583170d6cdc7077e3237560b364149fcd268b5f53d95a991963b191"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.3.0"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      sha256: "6c935fb612dff8e3cc9632c2b301720c77450a126114126ffaafe28d2e87956c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   path:
     dependency: transitive
     description:
@@ -340,10 +308,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_android
-      sha256: "4adf4fd5423ec60a29506c76581bc05854c55e3a0b72d35bb28d661c9686edf2"
+      sha256: d0d310befe2c8ab9e7f393288ccbb11b60c019c6b5afc21973eeee4dda2b35e9
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.15"
+    version: "2.2.17"
   path_provider_foundation:
     dependency: transitive
     description:
@@ -412,26 +380,26 @@ packages:
     dependency: transitive
     description:
       name: provider
-      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      sha256: "4abbd070a04e9ddc287673bf5a030c7ca8b685ff70218720abab8b092f53dd84"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.2"
-  rxdart:
+    version: "6.1.5"
+  sentry:
     dependency: transitive
     description:
-      name: rxdart
-      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
+      name: sentry
+      sha256: "599701ca0693a74da361bc780b0752e1abc98226cf5095f6b069648116c896bb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.28.0"
-  scroll_loop_auto_scroll:
+    version: "8.14.2"
+  sentry_flutter:
     dependency: "direct main"
     description:
-      name: scroll_loop_auto_scroll
-      sha256: "83645b380c58c9dac2a9948b11a6b09149a2aebd18a7ca25bbf3be3c89dbbbff"
+      name: sentry_flutter
+      sha256: "5ba2cf40646a77d113b37a07bd69f61bb3ec8a73cbabe5537b05a7c89d2656f8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5"
+    version: "8.14.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -541,6 +509,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      sha256: daf97c9d80197ed7b619040e86c8ab9a9dad285e7671ee7390f9180cc828a51e
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.10.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -567,4 +543,4 @@ packages:
     version: "3.1.3"
 sdks:
   dart: ">=3.6.1 <4.0.0"
-  flutter: ">=3.24.0"
+  flutter: ">=3.27.0"

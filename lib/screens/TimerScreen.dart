@@ -16,215 +16,213 @@ class TimerScreen extends StatelessWidget {
 
     return BlocConsumer<TimerCubit,AppStates>(
       listener: (context, state) {
-     },
-    builder: (context, state) {
-     var cubit=TimerCubit.get(context);
-     return  RotatedBox(
-       quarterTurns: 0,//cubit.screenRotate,
-       child: Scaffold(
-        backgroundColor: Color.fromRGBO(200, 200, 200, 1),
-        body: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      if(!cubit.whiteTurn) {
-                        _whitecontroller.start();
-                        _blackcontroller.pause();
-                        cubit.whiteTurnState();
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      color: cubit.whiteTurn?Colors.transparent:Colors.green,
-                      child: Column(
-                        children: [
-                          RotatedBox(quarterTurns: 2,child:
-                              Countdown(
-                                seconds: cubit.blackTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.white,offset: Offset(-2, -2),blurRadius: 2))),),
-                                interval: Duration(milliseconds: 1000),
-                                controller: _blackcontroller,
-                                onFinished: (){
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('White'),), (route) => false,);
-                                },
-                              ),
-                          ),
-                          RotatedBox(
-                            quarterTurns: 2,
-                            child: Text(
-                              'Black',
-                              style: GoogleFonts.bebasNeue(
-                                  color: Colors.black,
-                                  fontSize: 60,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: List.filled(
-                                      3,
-                                      Shadow(
-                                          color: Colors.white,
-                                          offset: Offset(-2,-2),
-                                          blurRadius: 2
-                                      )
-                                  )
-                              ),
+      },
+      builder: (context, state) {
+        var cubit=TimerCubit.get(context);
+        return  RotatedBox(
+          quarterTurns: 0, // cubit.screenRotate, - Keep this as per your original logic
+          child: SafeArea(
+            top: true,
+            child: Scaffold(
+              backgroundColor: const Color.fromRGBO(200, 200, 200, 1),
+              body: Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            if(!cubit.whiteTurn) {
+                              _whitecontroller.start();
+                              _blackcontroller.pause();
+                              cubit.whiteTurnState();
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            color: cubit.whiteTurn?Colors.transparent:Colors.green,
+                            child: Column(
+                              children: [
+                                RotatedBox(quarterTurns: 2,child:
+                                Countdown(
+                                  seconds: cubit.blackTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 80,fontWeight: FontWeight.bold,shadows: List.filled(3, const Shadow(color: Colors.white,offset: Offset(-2, -2),blurRadius: 2))),),
+                                  interval: const Duration(milliseconds: 1000),
+                                  controller: _blackcontroller,
+                                  onFinished: (){
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('White'),), (route) => false,);
+                                  },
+                                ),
+                                ),
+                                RotatedBox(
+                                  quarterTurns: 2,
+                                  child: Text(
+                                    'Black',
+                                    style: GoogleFonts.bebasNeue(
+                                        color: Colors.black,
+                                        fontSize: 40.0, // Fixed logical pixel size
+                                        fontWeight: FontWeight.bold,
+                                        shadows: List.filled(
+                                            3,
+                                            const Shadow(
+                                                color: Colors.white,
+                                                offset: Offset(-2,-2),
+                                                blurRadius: 2
+                                            )
+                                        )
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.center,
                             ),
                           ),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            if(cubit.whiteTurn)
+                            {
+                              _blackcontroller.start();
+                              _whitecontroller.pause();
+                              cubit.blackTurnState();
+                            }
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            color: cubit.whiteTurn?Colors.green:Colors.transparent,
+                            child: Column(
+                              children: [
+                                RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 40.0,fontWeight: FontWeight.bold,shadows: List.filled(3, const Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),)),
+                                RotatedBox(quarterTurns:0, child: Countdown(
+                                  seconds: cubit.whiteTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 80,fontWeight: FontWeight.bold,shadows: List.filled(3, const Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),),
+                                  interval: const Duration(milliseconds: 1000),
+                                  controller: _whitecontroller,
+                                  onFinished: (){
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('Black'),), (route) => false,);
+                                  },
+                                ),)
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      if(cubit.whiteTurn)
-                      {
-                        _blackcontroller.start();
-                        _whitecontroller.pause();
-                        cubit.blackTurnState();
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
+                      color: Colors.grey,
+                      height:1,
                       width: double.infinity,
-                      color: cubit.whiteTurn?Colors.green:Colors.transparent,
-                      child: Column(
-                        children: [
-                          RotatedBox(quarterTurns: 0,child: Text('White',style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 60,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),)),
-                          RotatedBox(quarterTurns:0, child: Countdown(
-                            seconds: cubit.whiteTime, build: (p0, p1) => Text(cubit.secondToString(seconds: p1.toInt()).toString(),style: GoogleFonts.bebasNeue(color: Colors.white,fontSize: 120,fontWeight: FontWeight.bold,shadows: List.filled(3, Shadow(color: Colors.black,offset: Offset(2, 2),blurRadius: 2))),),
-                            interval: Duration(milliseconds: 1000),
-                            controller: _whitecontroller,
-                            onFinished: (){
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('Black'),), (route) => false,);
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RotatedBox(
+                          quarterTurns: 2,
+                          child: Container(
+                            width: 50.0, // Fixed logical pixel size
+                            height: 50.0, // Fixed logical pixel size
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadiusDirectional.circular(50),
+                            ),
+                            child: IconButton(onPressed: ()
+                            {
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('White'),), (route) => false,);
                             },
-                          ),)
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: Colors.grey,
-                height:1,
-                width: double.infinity,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RotatedBox(
-                    quarterTurns: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadiusDirectional.circular(50),
-                          border: Border.all(color: Colors.black.withAlpha(100),width: 2)
-                      ),
-                      child: IconButton(onPressed: ()
-                      {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('White'),), (route) => false,);
-                      },
-                        icon:  Icon(Icons.flag,color: Colors.white,),
-                      ),
-                    ),
-                  ),
-                  RotatedBox(
-                    quarterTurns: 2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadiusDirectional.circular(50),
-                          border: Border.all(color: Colors.black.withAlpha(100),width: 2)
-                      ),
-                      child: IconButton(onPressed: ()
-                      {
-                        cubit.blackWantDraw();
-                      if(cubit.blackDraw&&cubit.whiteDraw)
-                      {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
-                      }
-                      },
-                        icon:  Icon(Icons.handshake,color: cubit.blackDraw?Colors.greenAccent:Colors.white,),
-                      ),
-                    ),
-                  ),
-                  SizedBox(),
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     color: Color.fromRGBO(200, 200, 200, 1),
-                  //     borderRadius: BorderRadiusDirectional.circular(50),
-                  //   ),
-                  //   child: IconButton(onPressed: ()
-                  //   {
-                  //     cubit.rotateScreen();
-                  //   },
-                  //     icon:  Icon(Icons.sync,color: Colors.black,),
-                  //   ),
-                  // ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(200, 200, 200, 1),
-                      borderRadius: BorderRadiusDirectional.circular(50),
-                    ),
-                    child: IconButton(onPressed: ()
-                    {
-                      Navigator.pop(context);
-                    },
-                      icon:  Icon(Icons.exit_to_app,color: Colors.black,),
-                    ),
-                  ),
-                  SizedBox(),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadiusDirectional.circular(50),
-                        border: Border.all(color: Colors.black.withAlpha(100),width: 2)
-                    ),
-                    child: IconButton(onPressed: ()
-                    {
-                      cubit.whiteWantDraw();
-                      if(cubit.blackDraw&&cubit.whiteDraw)
-                      {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('No one'),), (route) => false,);
-                      }
+                              icon:  const Icon(size: 28.0,Icons.flag,color: Colors.white,), // Fixed logical pixel size
+                            ),
+                          ),
+                        ),
+                        RotatedBox(
+                          quarterTurns: 2,
+                          child: Container(
+                            width: 50.0, // Fixed logical pixel size
+                            height: 50.0, // Fixed logical pixel size
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadiusDirectional.circular(50),
+                            ),
+                            child: IconButton(onPressed: ()
+                            {
+                              cubit.blackWantDraw();
+                              if(cubit.blackDraw&&cubit.whiteDraw)
+                              {
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('No one'),), (route) => false,);
+                              }
+                            },
+                              icon:  Icon(size: 28.0,Icons.handshake,color: cubit.blackDraw?Colors.greenAccent:Colors.white,), // Fixed logical pixel size
+                            ),
+                          ),
+                        ),
+                        const SizedBox(),
+                        Container(
+                          width: 50.0, // Fixed logical pixel size
+                          height: 50.0, // Fixed logical pixel size
+                          decoration: BoxDecoration(
+                            color: const Color.fromRGBO(200, 200, 200, 1),
+                            borderRadius: BorderRadiusDirectional.circular(50),
+                          ),
+                          child: IconButton(onPressed: ()
+                          {
+                            Navigator.pop(context);
+                          },
+                            icon:  const Icon(size: 28.0,Icons.exit_to_app,color: Colors.black,), // Fixed logical pixel size
+                          ),
+                        ),
+                        const SizedBox(),
+                        Container(
+                          width: 50.0, // Fixed logical pixel size
+                          height: 50.0, // Fixed logical pixel size
+                          decoration: BoxDecoration(
 
-                    },
-                      icon:  Icon(Icons.handshake,color: cubit.whiteDraw?Colors.greenAccent:Colors.black,),
+                            color: Colors.white,
+                            borderRadius: BorderRadiusDirectional.circular(50),
+                          ),
+                          child: IconButton(onPressed: ()
+                          {
+                            cubit.whiteWantDraw();
+                            if(cubit.blackDraw&&cubit.whiteDraw)
+                            {
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('No one'),), (route) => false,);
+                            }
+
+                          },
+                            icon:  Icon(size: 28.0,Icons.handshake,color: cubit.whiteDraw?Colors.greenAccent:Colors.black,), // Fixed logical pixel size
+                          ),
+                        ),
+                        Container(
+                          width: 50.0, // Fixed logical pixel size
+                          height: 50.0, // Fixed logical pixel size
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadiusDirectional.circular(50),
+                          ),
+                          child: IconButton(onPressed: ()
+                          {
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  Winnerscreen('Black'),), (route) => false,);
+                          },
+                            icon:  const Icon(size: 28.0,Icons.flag,color: Colors.black,), // Fixed logical pixel size
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadiusDirectional.circular(50),
-                        border: Border.all(color: Colors.black.withAlpha(100),width: 2)
-                    ),
-                    child: IconButton(onPressed: ()
-                    {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => Winnerscreen('Black'),), (route) => false,);
-                    },
-                      icon:  Icon(Icons.flag,color: Colors.black,),
-                    ),
-                  ),
+
                 ],
               ),
             ),
-
-          ],
-        ),
-           ),
-     );
-     },
+          ),
+        );
+      },
     );
   }
 }

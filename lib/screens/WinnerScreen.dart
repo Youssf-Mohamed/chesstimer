@@ -15,7 +15,7 @@ class Winnerscreen extends StatelessWidget {
 
       },
       builder: (context, state) {
-
+        var Media=MediaQuery.of(context);
         return Scaffold(
           backgroundColor: Color.fromRGBO(200, 200, 200, 1),
           body: Center(
@@ -27,8 +27,8 @@ class Winnerscreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("$winner is the winner",textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 80,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
-                  Text('press on the screen to continue',textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: 40,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
+                  Text("$winner is the winner",textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: Media.devicePixelRatio*15,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
+                  Text('press on the screen to continue',textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: Media.devicePixelRatio*8,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
                 ],
               ),
             ),

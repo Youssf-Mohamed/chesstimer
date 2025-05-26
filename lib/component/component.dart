@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 Widget CircleButtton({
   required int time,
   required func(),
+  width=50.0,
+  height=50.0
  // int sec = 0,
  // required Function(int) zer,
 }) => GestureDetector(
@@ -12,8 +14,8 @@ Widget CircleButtton({
     func();
   },
   child: Container(
-    width: 50,
-    height: 50,
+    width: width,
+    height: height,
     decoration: BoxDecoration(
       color: Colors.white,
       shape: BoxShape.circle,
