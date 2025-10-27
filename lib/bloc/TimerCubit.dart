@@ -11,19 +11,8 @@ class TimerCubit extends Cubit<AppStates>
   int whiteTime=300;
   int blackTime=300;
   bool whiteTurn=true;
-  var remainingTime=300;
   bool whiteDraw=false;
   bool blackDraw=false;
-  void whiteTimeRemaining({required int time}){
-    whiteTime=time;
-    whiteTurn=false;
-    emit(BlackTurnState());
-  }
-  void blackTimeRemaining({required int time}){
-    blackTime=time;
-    whiteTurn=true;
-    emit(WhiteTurnState());
-  }
   String secondToString({required int seconds}){
     String time='';
     int minutes=0;
@@ -48,27 +37,44 @@ class TimerCubit extends Cubit<AppStates>
   }
 
   /// Time is The Time in Second
-  void initialGame({required int time}){
+  Future<void> initialGame({required int time})async{
     whiteTime=time;
     blackTime=time;
     whiteTurn=true;
-    remainingTime=time;
+    whiteDraw=false;
+    blackDraw=false;
     emit(InitialGameState());
   }
 
   void timeUpdate(){
     emit(SelectTimeState());
   }
-
-  int screenRotate=0;
-  void rotateScreen(){
-    if(screenRotate==0)
-      {
-        screenRotate=2;
-      }
-    else{
-      screenRotate=0;
-    }
-    emit(ScreenRotateState());
+  //Todo: Rotate Screen
+  // int screenRotate=0;
+  // void rotateScreen(){
+  //   if(screenRotate==0)
+  //     {
+  //       screenRotate=2;
+  //     }
+  //   else{
+  //     screenRotate=0;
+  //   }
+  //   emit(ScreenRotateState());
+  // }
+  void whiteTurnState(){
+    whiteTurn=true;
+    emit(WhiteTurnState());
+  }
+  void blackTurnState(){
+    whiteTurn=false;
+    emit(BlackTurnState());
+  }
+  void whiteWantDraw(){
+    whiteDraw=!whiteDraw;
+    emit(WhiteDrawState());
+  }
+  void blackWantDraw(){
+    blackDraw=!blackDraw;
+    emit(BlackDrawState());
   }
 }

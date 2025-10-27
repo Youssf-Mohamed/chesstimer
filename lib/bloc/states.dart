@@ -11,3 +11,9 @@ class SelectTimeState extends AppStates{}
 class ConfirmTimeState extends AppStates{}
 
 class ScreenRotateState extends AppStates{}
+
+class UpdateTimeState extends AppStates{}
+
+class WhiteDrawState extends AppStates{}
+
+class BlackDrawState extends AppStates{}
