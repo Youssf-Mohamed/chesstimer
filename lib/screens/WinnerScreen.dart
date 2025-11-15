@@ -16,13 +16,14 @@ class Winnerscreen extends StatelessWidget {
       },
       builder: (context, state) {
         var Media=MediaQuery.of(context);
-        return Scaffold(
-          backgroundColor: Color.fromRGBO(200, 200, 200, 1),
-          body: Center(
-            child: GestureDetector(
+        return
+          GestureDetector(
               onTap: () {
                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeScreen(),), (route) => false,);
               },
+          child: Scaffold(
+          backgroundColor: Color.fromRGBO(200, 200, 200, 1),
+          body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,9 +32,8 @@ class Winnerscreen extends StatelessWidget {
                   Text('press on the screen to continue',textAlign:TextAlign.center,style: GoogleFonts.bebasNeue(color: Colors.black,fontSize: Media.devicePixelRatio*8,fontWeight: FontWeight.bold,shadows: List.filled(100, Shadow(color: Colors.white,offset: Offset(0, 0),blurRadius: 2))),),
                 ],
               ),
-            ),
           ),
-        );
+        ));
       },
     );
   }
