@@ -5,7 +5,7 @@ Widget CircleButtton({
   required int time,
   required func(),
   width=50.0,
-  height=50.0
+  height=50.0,
  // int sec = 0,
  // required Function(int) zer,
 }) => GestureDetector(
@@ -35,18 +35,19 @@ Widget CircleButtton({
     alignment: Alignment.center,
     child: Text(
       '$time',
-      style: const TextStyle(fontSize: 22, color: Colors.black),
+      style: TextStyle(fontSize: 22, color: Colors.black),
     ),
   ),
 );
 
 
 
-Widget NorButton({required BuildContext context, required String name, required func()}) => GestureDetector(
+Widget NorButton({required BuildContext context, required String name, required func(),double fontSize=35,}) => GestureDetector(
   onTap: () {
     func();
   },
   child: Container(
+
     width: 231,
     height: 53,
     decoration: BoxDecoration(
@@ -57,7 +58,7 @@ Widget NorButton({required BuildContext context, required String name, required 
       child: Text(
         '$name',
         style: TextStyle(
-          fontSize: 35,
+          fontSize: fontSize,
           color: Colors.white,
           fontWeight: FontWeight.bold,
           shadows: List.filled(100, const Shadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 1.7)),

@@ -46,180 +46,178 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 30),
-                            child: Text('Chess Time',textAlign: TextAlign.center, style: TextStyle(fontSize: 40.0,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, const Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3)))),
-                          )
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14.0),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: Text('Chess Time',textAlign: TextAlign.center, style: TextStyle(fontSize: 60,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, const Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3)))),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14.0),
+                              ),
+                              fixedSize: Size(screenWidth * 0.85, 53),
                             ),
-                            fixedSize: Size(screenWidth * 0.85, 53),
-                          ),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return SizedBox(
-                                  height: screenHeight * 0.5,
-                                  child: Column(
-                                    children: [
-                                      MaterialButton(
-                                        child: const Text('Close'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Expanded(
-                                              child: ListView.builder(
-                                                itemCount: 60,
-                                                itemBuilder: (context, index) {
-                                                  return ListTile(
-                                                    title: Center(child: Text('$index')),
-                                                    onTap: () {
-                                                      _selectedm = index;
-                                                      cubit.timeUpdate(); // This will trigger a rebuild, but _selectedm here is local
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: ListView.builder(
-                                                itemCount: 61,
-                                                itemBuilder: (context, index) {
-                                                  return ListTile(
-                                                    title: Center(child: Text('$index')),
-                                                    onTap: () {
-                                                      _selecteds = index;
-                                                      cubit.timeUpdate(); // This will trigger a rebuild, but _selecteds here is local
-                                                    },
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return SizedBox(
+                                    height: screenHeight * 0.5,
+                                    child: Column(
+                                      children: [
+                                        MaterialButton(
+                                          child: const Text('Close'),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
                                         ),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                child: ListView.builder(
+                                                  itemCount: 60,
+                                                  itemBuilder: (context, index) {
+                                                    return ListTile(
+                                                      title: Center(child: Text('$index')),
+                                                      onTap: () {
+                                                        _selectedm = index;
+                                                        cubit.timeUpdate(); // This will trigger a rebuild, but _selectedm here is local
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: ListView.builder(
+                                                  itemCount: 61,
+                                                  itemBuilder: (context, index) {
+                                                    return ListTile(
+                                                      title: Center(child: Text('$index')),
+                                                      onTap: () {
+                                                        _selecteds = index;
+                                                        cubit.timeUpdate(); // This will trigger a rebuild, but _selecteds here is local
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const SizedBox(width: 24),
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                      '$_selectedm : $_selecteds',
+                                      style: const TextStyle(
+                                        fontSize: 24.0,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(width: 24),
-                              Expanded(
-                                child: Center(
-                                  child: Text(
-                                    '$_selectedm : $_selecteds',
-                                    style: const TextStyle(
-                                      fontSize: 24.0,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ),
-                              const Icon(
-                                Icons.access_time_filled_sharp,
-                                color: Colors.black,
-                                size: 30.0,
-                              ),
-                            ],
+                                const Icon(
+                                  Icons.access_time_filled_sharp,
+                                  color: Colors.black,
+                                  size: 30.0,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CircleButtton(
-                            width: 60.0,
-                            time: 2,
-                            func: () {
-                              _selectedm = 2;
-                              _selecteds = 0;
-                              cubit.timeUpdate();
-                            },
-                          ),
-                          CircleButtton(
-                            width: 60.0,
-                            time: 5,
-                            func: () {
-                              _selectedm = 5;
-                              _selecteds = 0;
-                              cubit.timeUpdate();
-                            },
-                          ),
-                          CircleButtton(
-                            width: 60.0,
-                            time: 10,
-                            func: () {
-                              _selectedm = 10;
-                              _selecteds = 0;
-                              cubit.timeUpdate();
-                            },
-                          ),
-                          CircleButtton(
-                            width: 60.0,
-                            time: 20,
-                            func: () {
-                              _selectedm = 20;
-                              _selecteds = 0;
-                              cubit.timeUpdate();
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      NorButton(context: context, name: 'Start', func: () async{
-                        try {
-                          int time = (_selectedm * 60) + _selecteds;
-                          if (time > 0) {
-                            await cubit.initialGame(time: time);
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => TimerScreen(),));
-                          }
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleButtton(
+                              width: 60.0,
+                              time: 2,
+                              func: () {
+                                _selectedm = 2;
+                                _selecteds = 0;
+                                cubit.timeUpdate();
+                              },
+                            ),
+                            CircleButtton(
+                              width: 60.0,
+                              time: 5,
+                              func: () {
+                                _selectedm = 5;
+                                _selecteds = 0;
+                                cubit.timeUpdate();
+                              },
+                            ),
+                            CircleButtton(
+                              width: 60.0,
+                              time: 10,
+                              func: () {
+                                _selectedm = 10;
+                                _selecteds = 0;
+                                cubit.timeUpdate();
+                              },
+                            ),
+                            CircleButtton(
+                              width: 60.0,
+                              time: 20,
+                              func: () {
+                                _selectedm = 20;
+                                _selecteds = 0;
+                                cubit.timeUpdate();
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    NorButton(context: context, name: 'Start', fontSize: 30,func: () async{
+                      try {
+                        int time = (_selectedm * 60) + _selecteds;
+                        if (time > 0) {
+                          await cubit.initialGame(time: time);
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => TimerScreen(),));
                         }
-                        catch (exception,stackTrace){
-                          await Sentry.captureException(exception,stackTrace: stackTrace);
-                        }
-                      },),
-                      const SizedBox(height: 20),
-                      NorButton(context: context, name: 'Credit', func: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));
-                      },),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(onPressed: (){
-                            BetterFeedback.of(context).showAndUploadToSentry(
-                            );
-                          }, icon: Icon(size: 15,Icons.feedback,color: Colors.red,))
-                        ],
-                      ),
-                    ],
-                  ),
+                      }
+                      catch (exception,stackTrace){
+                        await Sentry.captureException(exception,stackTrace: stackTrace);
+                      }
+                    },),
+                    NorButton(context: context, name: 'Credit',fontSize: 30, func: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));
+                    },),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(onPressed: (){
+                          BetterFeedback.of(context).showAndUploadToSentry(
+                          );
+                        }, icon: Icon(size: 15,Icons.feedback,color: Colors.red,))
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
