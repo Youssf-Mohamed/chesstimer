@@ -32,20 +32,20 @@ class HomeScreen extends StatelessWidget {
             backgroundColor:Colors.white70,
             body: Stack(
               children: [
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6,),
-                  itemCount: 1000,
-                  itemBuilder: (context, index) {
-                    int row = index ~/ 6;
-                    int col = index % 6;
-                    bool isBlack = (row + col) % 2 == 0;
-                    return Container(
-                      color: isBlack ? Colors.black : const Color.fromRGBO(200, 200, 200, 1),
-                      child: const Center(),
-                    );
-                  },
-                ),
+                // GridView.builder(
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6,),
+                //   itemCount: 1000,
+                //   itemBuilder: (context, index) {
+                //     int row = index ~/ 6;
+                //     int col = index % 6;
+                //     bool isBlack = (row + col) % 2 == 0;
+                //     return Container(
+                //       color: isBlack ? Colors.black : const Color.fromRGBO(200, 200, 200, 1),
+                //       child: const Center(),
+                //     );
+                //   },
+                // ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
