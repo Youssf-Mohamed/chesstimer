@@ -10,6 +10,7 @@ class TimerCubit extends Cubit<AppStates>
   //Code here
   int whiteTime=300;
   int blackTime=300;
+  int lastTime=300; // stores the original game duration for replay
   bool whiteTurn=true;
   bool whiteDraw=false;
   bool blackDraw=false;
@@ -38,6 +39,7 @@ class TimerCubit extends Cubit<AppStates>
 
   /// Time is The Time in Second
   Future<void> initialGame({required int time})async{
+    lastTime=time; // remember for Play Again
     whiteTime=time;
     blackTime=time;
     whiteTurn=true;

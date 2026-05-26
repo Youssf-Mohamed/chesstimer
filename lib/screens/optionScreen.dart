@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:chesstimer/component/animated_chess_background.dart';
 
 class OptionScreen extends StatelessWidget {
   const OptionScreen({Key? key}) : super(key: key);
@@ -8,46 +7,22 @@ class OptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: const Color(0xFFE2E8F0),
       body: Stack(
         children: [
-          SizedBox.expand(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-              ),
-              itemCount: 60,
-              itemBuilder: (context, index) {
-                int row = index ~/ 6;
-                int col = index % 6;
-                bool isBlack = (row + col) % 2 == 0;
-                return Container(
-                  color: isBlack
-                      ? Colors.black
-                      : const Color.fromRGBO(200, 200, 200, 1),
-                );
-              },
-            ),
-          ),
+          const AnimatedChessBackground(),
 
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Options',
                   style: TextStyle(
                     fontSize: 50,
-                    color: Colors.white,
+                    color: Color(0xFF1F2937),
                     fontWeight: FontWeight.bold,
-                    shadows: List.filled(
-                      100,
-                      const Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 0),
-                        blurRadius: 2.3,
-                      ),
-                    ),
+                    letterSpacing: 1.2,
                   ),
                 ),
                 const SizedBox(height: 50),
@@ -61,25 +36,34 @@ class OptionScreen extends StatelessWidget {
                       width: 200, // smaller width
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
+                        color: Colors.white.withAlpha(200),
                         borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.grey.shade300, width: 1.5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(15),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
                       child: Slider(
                         value: 0.5,
                         onChanged: (value) {},
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.grey[400],
+                        activeColor: const Color(0xFF1F2937),
+                        inactiveColor: Colors.grey[300],
                       ),
                     ),
                     const SizedBox(width: 8), // Less space between slider and icon
-                    const Icon(Icons.volume_up, color: Colors.white),
+                    const Icon(Icons.volume_up, color: Color(0xFF1F2937)),
                   ],
                 ),
 
                 const SizedBox(height: 20),
 
                 IconButton(
-                  icon: const Icon(Icons.brightness_2, color: Colors.white),
+                  icon: const Icon(Icons.brightness_2, color: Color(0xFF1F2937)),
                   onPressed: () {},
                 ),
 
@@ -87,7 +71,11 @@ class OptionScreen extends StatelessWidget {
 
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF1F2937),
+                    foregroundColor: Colors.white,
+                    elevation: 2,
+                    shadowColor: Colors.black.withAlpha(25),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
                     ),
@@ -99,7 +87,7 @@ class OptionScreen extends StatelessWidget {
                     'Back',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

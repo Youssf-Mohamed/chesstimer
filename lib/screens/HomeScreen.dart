@@ -5,20 +5,21 @@ import 'package:feedback/feedback.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import '../bloc/TimerCubit.dart';
 import '../bloc/states.dart';
-
+import 'package:chesstimer/component/animated_chess_background.dart';
 
 class HomeScreen extends StatelessWidget {
+  int _selectedm = 0;
 
-  int _selectedm = 0 ;
-  int _selecteds = 0 ;
+  int _selecteds = 0;
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TimerCubit,AppStates>(
-      listener: (context, state) {
-      },
+    return BlocConsumer<TimerCubit, AppStates>(
+      listener: (context, state) {},
       builder: (context, state) {
         var mediaQuery = MediaQuery.of(context);
         var cubit = TimerCubit.get(context);
@@ -29,32 +30,84 @@ class HomeScreen extends StatelessWidget {
         return SafeArea(
           top: true,
           child: Scaffold(
-            backgroundColor:Colors.white70,
+            backgroundColor: const Color(0xFFE2E8F0),
             body: Stack(
               children: [
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6,),
-                  itemCount: 1000,
-                  itemBuilder: (context, index) {
-                    int row = index ~/ 6;
-                    int col = index % 6;
-                    bool isBlack = (row + col) % 2 == 0;
-                    return Container(
-                      color: isBlack ? Colors.black : const Color.fromRGBO(200, 200, 200, 1),
-                      child: const Center(),
-                    );
-                  },
-                ),
+                const AnimatedChessBackground(),
                 SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12, top: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                BetterFeedback.of(context)
+                                    .showAndUploadToSentry();
+                              },
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                    width: 1.5,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withAlpha(15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: const Icon(
+                                  Icons.bug_report_outlined,
+                                  size: 20,
+                                  color: Color(0xFF64748B),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Column(
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 30),
-                            child: Text('Chess Time',textAlign: TextAlign.center, style: TextStyle(fontSize: 40.0,color: Colors.white,fontWeight: FontWeight.bold,shadows: List.filled(100, const Shadow(color: Colors.black,offset: Offset(0, 0),blurRadius: 2.3)))),
+                            child: ShaderMask(
+                              shaderCallback: (bounds) => const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Color(0xFF1F2937), // deep slate
+                                  Color.fromARGB(
+                                      255, 76, 85, 88), // teal accent
+                                ],
+                              ).createShader(bounds),
+                              child: Text(
+                                'Tchimer',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.bebasNeue(
+                                  fontSize: 64.0,
+                                  color: Colors.white, // masked by shader
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 6.0,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black.withAlpha(30),
+                                      offset: const Offset(0, 4),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           )
                         ],
                       ),
@@ -63,8 +116,13 @@ class HomeScreen extends StatelessWidget {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
+                            foregroundColor: const Color(0xFF1F2937),
+                            elevation: 2,
+                            shadowColor: Colors.black.withAlpha(25),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14.0),
+                              side: BorderSide(
+                                  color: Colors.grey.shade200, width: 1.5),
                             ),
                             fixedSize: Size(screenWidth * 0.85, 53),
                           ),
@@ -84,17 +142,20 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Expanded(
                                               child: ListView.builder(
                                                 itemCount: 60,
                                                 itemBuilder: (context, index) {
                                                   return ListTile(
-                                                    title: Center(child: Text('$index')),
+                                                    title: Center(
+                                                        child: Text('$index')),
                                                     onTap: () {
                                                       _selectedm = index;
-                                                      cubit.timeUpdate(); // This will trigger a rebuild, but _selectedm here is local
+                                                      cubit
+                                                          .timeUpdate(); // This will trigger a rebuild, but _selectedm here is local
                                                     },
                                                   );
                                                 },
@@ -105,10 +166,12 @@ class HomeScreen extends StatelessWidget {
                                                 itemCount: 61,
                                                 itemBuilder: (context, index) {
                                                   return ListTile(
-                                                    title: Center(child: Text('$index')),
+                                                    title: Center(
+                                                        child: Text('$index')),
                                                     onTap: () {
                                                       _selecteds = index;
-                                                      cubit.timeUpdate(); // This will trigger a rebuild, but _selecteds here is local
+                                                      cubit
+                                                          .timeUpdate(); // This will trigger a rebuild, but _selecteds here is local
                                                     },
                                                   );
                                                 },
@@ -133,7 +196,7 @@ class HomeScreen extends StatelessWidget {
                                     '$_selectedm : $_selecteds',
                                     style: const TextStyle(
                                       fontSize: 24.0,
-                                      color: Colors.black,
+                                      color: Color(0xFF1F2937),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -141,7 +204,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                               const Icon(
                                 Icons.access_time_filled_sharp,
-                                color: Colors.black,
+                                color: Color(0xFF4B5563),
                                 size: 30.0,
                               ),
                             ],
@@ -191,33 +254,39 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      NorButton(context: context, name: 'Start', func: () async{
-                        try {
-                          int time = (_selectedm * 60) + _selecteds;
-                          if (time > 0) {
-                            await cubit.initialGame(time: time);
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => TimerScreen(),));
+                      NorButton(
+                        context: context,
+                        name: 'Start',
+                        func: () async {
+                          try {
+                            int time = (_selectedm * 60) + _selecteds;
+                            if (time > 0) {
+                              await cubit.initialGame(time: time);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TimerScreen(),
+                                  ));
+                            }
+                          } catch (exception, stackTrace) {
+                            await Sentry.captureException(exception,
+                                stackTrace: stackTrace);
                           }
-                        }
-                        catch (exception,stackTrace){
-                          await Sentry.captureException(exception,stackTrace: stackTrace);
-                        }
-                      },),
-                      const SizedBox(height: 20),
-                      NorButton(context: context, name: 'Credit', func: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => CreditScreen(),));
-                      },),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(onPressed: (){
-                            BetterFeedback.of(context).showAndUploadToSentry(
-                            );
-                          }, icon: Icon(size: 15,Icons.feedback,color: Colors.red,))
-                        ],
+                        },
                       ),
+                      const SizedBox(height: 20),
+                      NorButton(
+                        context: context,
+                        name: 'Credit',
+                        func: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CreditScreen(),
+                              ));
+                        },
+                      ),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),

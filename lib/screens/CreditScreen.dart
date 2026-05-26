@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:chesstimer/component/animated_chess_background.dart';
 
 class CreditScreen extends StatelessWidget {
   const CreditScreen({Key? key}) : super(key: key);
@@ -7,84 +7,43 @@ class CreditScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: const Color(0xFFE2E8F0),
       body: Stack(
         children: [
-          SizedBox.expand(
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 1000,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-              ),
-              itemBuilder: (context, index) {
-                int row = index ~/ 6;
-                int col = index % 6;
-                bool isBlack = (row + col) % 2 == 0;
-                return Container(
-                  color: isBlack
-                      ? Colors.black
-                      : const Color.fromRGBO(200, 200, 200, 1),
-                );
-              },
-            ),
-          ),
+          const AnimatedChessBackground(),
 
           // Content
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Credits',
                   style: TextStyle(
                     fontSize: 50,
-                    color: Colors.white,
+                    color: Color(0xFF1F2937),
                     fontWeight: FontWeight.bold,
-                    shadows: List.filled(
-                      100,
-                      const Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 0),
-                        blurRadius: 2.3,
-                      ),
-                    ),
+                    letterSpacing: 1.2,
                   ),
                 ),
 
                 const SizedBox(height: 50),
 
-                Text(
+                const Text(
                   'Ahmed Samy',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    shadows: List.filled(
-                      50,
-                      const Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 0),
-                        blurRadius: 2,
-                      ),
-                    ),
+                    color: Color(0xFF374151),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text(
+                const Text(
                   'Yousef Mohamed',
                   style: TextStyle(
                     fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    shadows: List.filled(
-                      50,
-                      const Shadow(
-                        color: Colors.black,
-                        offset: Offset(0, 0),
-                        blurRadius: 2,
-                      ),
-                    ),
+                    color: Color(0xFF374151),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
 
@@ -92,7 +51,11 @@ class CreditScreen extends StatelessWidget {
 
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF1F2937),
+                    foregroundColor: Colors.white,
+                    elevation: 2,
+                    shadowColor: Colors.black.withAlpha(25),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14.0),
                     ),
@@ -104,7 +67,7 @@ class CreditScreen extends StatelessWidget {
                     'Back',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
