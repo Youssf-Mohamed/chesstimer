@@ -3,7 +3,6 @@ import 'package:chesstimer/screens/WinnerScreen.dart';
 import 'package:chesstimer/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 import '../bloc/states.dart';
@@ -60,7 +59,8 @@ class TimerScreen extends StatelessWidget {
                                       cubit
                                           .secondToString(seconds: p1.toInt())
                                           .toString(),
-                                      style: GoogleFonts.bebasNeue(
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
                                         color: Colors.white,
                                         fontSize: 95,
                                         fontWeight: FontWeight.bold,
@@ -86,7 +86,8 @@ class TimerScreen extends StatelessWidget {
                                   quarterTurns: 2,
                                   child: Text(
                                     'Black',
-                                    style: GoogleFonts.bebasNeue(
+                                    style: TextStyle(
+                                      fontFamily: 'BebasNeue',
                                       color: cubit.whiteTurn
                                           ? const Color(0xFF9CA3AF)
                                           : const Color(0xFFD8F3DC),
@@ -127,7 +128,8 @@ class TimerScreen extends StatelessWidget {
                                   quarterTurns: 0,
                                   child: Text(
                                     'White',
-                                    style: GoogleFonts.bebasNeue(
+                                    style: TextStyle(
+                                      fontFamily: 'BebasNeue',
                                       color: cubit.whiteTurn
                                           ? const Color(
                                               0xFFCCFBF1) // light teal label when active
@@ -148,7 +150,8 @@ class TimerScreen extends StatelessWidget {
                                       cubit
                                           .secondToString(seconds: p1.toInt())
                                           .toString(),
-                                      style: GoogleFonts.bebasNeue(
+                                      style: TextStyle(
+                                        fontFamily: 'BebasNeue',
                                         color: cubit.whiteTurn
                                             ? Colors.white // white text on teal
                                             : const Color(

@@ -5,7 +5,6 @@ import 'package:feedback/feedback.dart';
 import 'package:feedback_sentry/feedback_sentry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import '../bloc/TimerCubit.dart';
 import '../bloc/states.dart';
@@ -93,7 +92,8 @@ class HomeScreen extends StatelessWidget {
                               child: Text(
                                 'Tchimer',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.bebasNeue(
+                                style: TextStyle(
+                                  fontFamily: 'BebasNeue',
                                   fontSize: 64.0,
                                   color: Colors.white, // masked by shader
                                   fontWeight: FontWeight.bold,

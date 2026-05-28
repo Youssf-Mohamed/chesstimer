@@ -5,7 +5,6 @@ import 'package:chesstimer/screens/HomeScreen.dart';
 import 'package:chesstimer/screens/TimerScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Winnerscreen extends StatelessWidget {
   Winnerscreen(this.winner);
@@ -91,7 +90,8 @@ class Winnerscreen extends StatelessWidget {
                       child: Text(
                         isDraw ? "It's a Draw!" : '$winner Wins!',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.bebasNeue(
+                        style: TextStyle(
+                          fontFamily: 'BebasNeue',
                           fontSize: 62.0,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -155,7 +155,8 @@ class Winnerscreen extends StatelessWidget {
                         child: Center(
                           child: Text(
                             'Play Again',
-                            style: GoogleFonts.bebasNeue(
+                            style: TextStyle(
+                              fontFamily: 'BebasNeue',
                               fontSize: 26,
                               color: const Color(0xFF1F2937),
                               fontWeight: FontWeight.bold,
